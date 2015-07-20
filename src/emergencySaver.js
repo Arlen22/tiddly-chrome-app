@@ -1,5 +1,5 @@
 (function(){
-
+    return;
     
     var postToParent = null;
     var postToOrigin = null;
