@@ -12,43 +12,22 @@
 //
 
 (function(){
-    /*window.getFile = function loadFile(cb){
-        chrome.fileSystem.chooseEntry({
-            type: 'openWritableFile', 
-            accepts:[{
-                extensions: ['html']
-            }] 
-        }, 
-        cb);
-         
-    };
-    return;*/
+
     var currentFileEntry;
     var webview;
     var expectingClose = false;
     window.onload = function(event){
         chrome.runtime.getBackgroundPage(function(backgroundPage){
-            
+
             console.log(event);
             document.getElementById('reload').onclick = loadWebview;
             document.getElementById('load').onclick = loadFile;
-            document.getElementById("close-window-button").onclick = function() {
-                expectingClose = true;
-                webview.contentWindow.postMessage({ message: 'onbeforeunload-tiddly-chrome-file-saver' }, window.location.origin);
-                //webview.executeScript({ code: 'window.postMessage({ message: "onbeforeunload", data: !!window.onbeforeunload ? window.onbeforeunload() : false }); ' }, function(res){
-                    //window.close();
-                //});
-            }
-            if(window.tiddlyChromeAutoOpen){
 
-            }
             webview = document.getElementById('webview');
             webview.addEventListener('contentload', function() {
                 if(webview.src == "about:blank") return;
                 
-                webview.executeScript({ file: 'emergencySaver.js' }, function( results ){
-                    webview.contentWindow.postMessage({ message: 'welcome-tiddly-chrome-file-saver' }, window.location.origin);
-                });
+                webview.contentWindow.postMessage({ message: 'welcome-tiddly-chrome-file-saver' }, window.location.origin);
                 
                 //TODO: show a popup warning that the saver isn't activated yet. If the TW doesn't have the saver,
                 //      the user should not use this chrome app for editting TW, as it does not ask before closing.
@@ -56,14 +35,6 @@
             });
             webview.addEventListener('newwindow', function(e) {
                 e.preventDefault();
-                // e.targetUrl contains the target URL of the original link click
-                // or window.open() call: use it to open your own window to it.
-                // Something to keep in mind: window.open() called from the
-                // app's event page is currently (Nov 2013) handicapped and buggy
-                // (e.g. it doesn't have access to local storage, including cookie
-                // store). You can try to use it here and below, but be prepare that
-                // it may sometimes produce bad results.
-                //chrome.app.window.create(e.targetUrl);
                 chrome.browser.openTab(e.targetUrl);
             });
             webview.addEventListener('consolemessage', function(e){
