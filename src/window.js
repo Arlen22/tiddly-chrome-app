@@ -15,7 +15,6 @@
 
     var currentFileEntry;
     var webview;
-    var expectingClose = false;
     window.onload = function(event){
         chrome.runtime.getBackgroundPage(function(backgroundPage){
 
@@ -177,11 +176,13 @@
                 
             });
         }
-        if(event.data.message === "onbeforeunload-tiddly-chrome-file-saver" && expectingClose){
-            if(typeof(event.data.data) === "string"){
-                //show confirm box and close if true.
-            }
+        else if(event.data.message === 'temp-save-file-tiddly-chrome-file-saver'){
+            //do something with the temp save data
         }
+        else if(event.data.message === 'thankyou-file-tiddly-chrome-file-saver'){
+            //remove the popup window here that is shown on load
+        }
+        
     });
     
     window.alert = function(text){
