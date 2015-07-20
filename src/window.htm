@@ -2,42 +2,83 @@
 <html>
   <head>
     <style>
-      body { margin: 0; }
-      #test { 
-          top: 25px;
-          position: absolute;
-          width: 100%;
-          height: calc(100% - 25px);
-          left: 0;
-          right: 0;
-          bottom: 0;
-      }
-      .popup { 
-        position: fixed; 
-        top: 50%;
-        left: 50%;
-        width:250px;
-        margin-left: -125px;
-        
-        /*transform: translate(-50%, -50%);*/
-        
-        border: 1px solid rgb(51, 102, 153); 
-        padding: 10px; 
-        background-color: rgb(255, 255, 255); 
-        z-index: 2001; 
-        overflow: auto; 
-        
-      }
-      .cover { position: absolute; left: 0px; top: 0px; background-color: #000; opacity: 0.5; z-index: 2000; height: 100%; width: 100%; }
+        body { 
+            margin: 0; 
+            
+        }
+        #titlebar, #navbar, #webview {
+            left:5px;
+            right:5px;
+        }
+        #webview { 
+            top: 43px;
+            position: fixed;
+            width: auto;
+            height: auto;
+            bottom: 10px;
+        }
+        .popup { 
+            position: fixed; 
+            top: 50%;
+            left: 50%;
+            width:250px;
+            margin-left: -125px;
+
+            /*transform: translate(-50%, -50%);*/
+
+            border: 1px solid rgb(51, 102, 153); 
+            padding: 10px; 
+            background-color: rgb(255, 255, 255); 
+            z-index: 2001; 
+            overflow: auto; 
+
+        }
+        .cover { 
+            position: fixed; 
+            left: 0px; 
+            top: 20px; 
+            bottom:0;
+            right:0;
+            background-color: #000; 
+            opacity: 0.5; 
+            z-index: 2000; 
+            /* height: 100%; */
+            /* width: 100%; */
+        }
+        #titlebar { 
+            position: fixed;
+            top:0px;
+            height:21px;
+            -webkit-app-region: drag;
+        }
+        #navbar {
+            position: fixed;
+            top:21px;
+            height:21px;
+            
+        }
+        #titlebar .align-right{
+            float:right;
+            -webkit-app-region: no-drag;
+        }
     </style>
     <script src="window.js"></script>
   </head>
   <body>
-    <!-- <iframe id="test" sandbox="allow-scripts allow-popups allow-forms allow-same-origin" seamless="seamless"></iframe> -->
-    <button id="reload">Reload</button>&nbsp;
-    #<input id="hashQuery" type="text"/>
-    <button id="load">Load</button>
-    <webview id="test" src="" width="640" height="480"></webview>
+    
+    <div id="titlebar">
+        <span class="align-right">
+            <button id="close-window-button">X</button>
+        </span>
+    </div>
+    <div id="navbar">
+        <button id="reload">Reload</button>&nbsp;
+        #<input id="hashQuery" type="text"/>
+        <button id="load">Load</button>
+    </div>
+    
+    
+    <webview id="webview" src="about:blank" width="640" height="480" partition="browserTW"></webview>
     <div style="display:none;" class="lightbox cover" style="">
         
     </div>
