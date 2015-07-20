@@ -1,0 +1,26 @@
+{
+   "app": {
+      "background": {
+         "scripts": [ "background.js" ]
+      }
+   },
+   "externally_connectable": {
+      "ids": [ "*" ]
+   },
+   "file_handlers": {
+      "html": {
+         "extensions": [ "html", "htm" ],
+         "title": "TiddlyChrome"
+      }
+   },
+   "manifest_version": 2,
+   "minimum_chrome_version": "23",
+   "name": "TiddlyChrome",
+   "permissions": [ {
+      "fileSystem": [ "write", "directory" ]
+   }, "webview" ],
+   "sandbox": {
+      "pages": [ "blob:*" ]
+   },
+   "version": "0.3"
+}
