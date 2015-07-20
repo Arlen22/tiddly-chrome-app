@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      body { margin: 0; }
+      #test { 
+          top: 25px;
+          position: absolute;
+          width: 100%;
+          height: calc(100% - 25px);
+          left: 0;
+          right: 0;
+          bottom: 0;
+      }
+      .popup { 
+        position: fixed; 
+        top: 50%;
+        left: 50%;
+        width:250px;
+        margin-left: -125px;
+        
+        /*transform: translate(-50%, -50%);*/
+        
+        border: 1px solid rgb(51, 102, 153); 
+        padding: 10px; 
+        background-color: rgb(255, 255, 255); 
+        z-index: 2001; 
+        overflow: auto; 
+        
+      }
+      .cover { position: absolute; left: 0px; top: 0px; background-color: #000; opacity: 0.5; z-index: 2000; height: 100%; width: 100%; }
+    </style>
+    <script src="window.js"></script>
+  </head>
+  <body>
+    <!-- <iframe id="test" sandbox="allow-scripts allow-popups allow-forms allow-same-origin" seamless="seamless"></iframe> -->
+    <button id="reload">Reload</button>&nbsp;
+    #<input id="hashQuery" type="text"/>
+    <button id="load">Load</button>
+    <webview id="test" src="" width="640" height="480"></webview>
+    <div style="display:none;" class="lightbox cover" style="">
+        
+    </div>
+    <div style="display:none;" class="lightbox popup" style="">
+        <span id="popupLabel"></span>
+        <input id="popupText" type="text" />
+        <br/>
+        <span style="text-align:right; width:100%; display:inline-block; padding: 0.5em 2em; box-sizing: border-box;">
+            <button id="popupYes">Yes</button>
+            <button id="popupNo">No</button>
+            <button id="popupOK">OK</button>
+            <button id="popupCancel">Cancel</button>
+        </span>
+    </div>
+  </body>
+</html>
