@@ -5,7 +5,7 @@
 //chrome://inspect/#apps
 //https://developer.chrome.com/apps/tags/webview#type-ContentWindow
 
-//TODO: 
+//TODO:
 //Investigate context menu
 //Open inspector with button
 //Show webview#src in hashQuery box when it get's changed
@@ -25,16 +25,16 @@
             webview = document.getElementById('webview');
             webview.addEventListener('contentload', function() {
                 if(webview.src == "about:blank") return;
-                
+
                 webview.contentWindow.postMessage({ message: 'welcome-tiddly-chrome-file-saver' }, window.location.origin);
-                
+
                 //TODO: show a popup warning that the saver isn't activated yet. If the TW doesn't have the saver,
                 //      the user should not use this chrome app for editting TW, as it does not ask before closing.
                 //      We could inject a script to listen to wiki messages, but that's better done from inside TW.
             });
             webview.addEventListener('newwindow', function(e) {
                 e.preventDefault();
-                chrome.browser.openTab(e.targetUrl);
+                window.open(e.targetUrl);
             });
             webview.addEventListener('consolemessage', function(e){
                 switch(e.level){
@@ -47,15 +47,15 @@
             });
             webview.addEventListener('dialog', showPopup);
             webview.addEventListener('exit', function(e) {
-              
+
                 webview.src = 'data:text/plain,Goodbye, world! reason:' + e.reason;
-              
+
             });
             webview.addEventListener('close', function() {
-               
+
                 webview.src = 'about:blank';
-                
-                
+
+
             });
             webview.addEventListener('permissionrequest', function(e) {
               switch (e.permission) {
@@ -77,8 +77,8 @@
             if(window.tiddlyChromeAutoOpen) {
                 currentFileEntry = window.tiddlyChromeAutoOpen;
                 loadWebview();
-            } else { 
-                loadFile(); 
+            } else {
+                loadFile();
             }
             webview.canGoBack = false;
             webview.canGoForward = false;
@@ -89,36 +89,36 @@
         currentFileEntry.file(function(file) {
             webview.src = URL.createObjectURL(file)+'#'+hashQuery;
         });
-        
+
     }
     function loadFile(){
         chrome.fileSystem.chooseEntry(
             {
-                type: 'openWritableFile', 
+                type: 'openWritableFile',
                 accepts:[{
                     extensions: ['html']
-                }] 
-            }, 
+                }]
+            },
             function(fileEntry) {
-                
+
                 if (!fileEntry) {
                     return;
                 }
-                
+
                 currentFileEntry = fileEntry;
                 console.log(fileEntry);
                 loadWebview();
-                
+
             }
-        );  
+        );
     };
     function showPopup(e){
         console.log(e);
         e.preventDefault();
-        
+
         var lightbox = document.getElementsByClassName('lightbox');
         for(var i = 0; i < lightbox.length; i++){ lightbox[i].style.display = "block"; }
-        
+
         var items = {};
         function setDisplay(hides){
             ['popupYes', 'popupNo', 'popupOK', 'popupCancel'].forEach(function(e,i){
@@ -138,13 +138,13 @@
             } else if (clickEvent.target.id == "popupOK" || clickEvent.target.id == "popupYes"){
                 e.dialog.ok(e.messageType == "prompt" ? document.getElementById('popupText').value : null);
                 endPopup();
-            } 
+            }
         };
         ['popupYes', 'popupNo', 'popupOK', 'popupCancel'].forEach(function(e,i){
             items[e] = document.getElementById(e);
             items[e].onclick = clicker;
         });
-        
+
         if(e.messageType === 'alert'){
             setDisplay(['popupOK']);
         } else if(e.messageType === 'confirm'){
@@ -157,8 +157,8 @@
         document.getElementById('popupText').value = e.defaultPromptText;
         document.getElementById('popupText').style.display = e.messageType === 'prompt' ? 'inline-block' : 'none';
         document.getElementById('popupLabel').innerText = e.messageText;
-        
-        
+
+
     };
     window.addEventListener('message', function(event){
         console.log(event);
@@ -172,8 +172,8 @@
                     else event.source.postMessage({ message: 'file-saved-tiddly-chrome-file-saver', id: event.data.id, error: null }, window.location.origin);
                 };
                 writer.truncate(0);
-                
-                
+
+
             });
         }
         else if(event.data.message === 'temp-save-file-tiddly-chrome-file-saver'){
@@ -182,9 +182,9 @@
         else if(event.data.message === 'thankyou-file-tiddly-chrome-file-saver'){
             //remove the popup window here that is shown on load
         }
-        
+
     });
-    
+
     window.alert = function(text){
         showPopup({messageType: 'alert', messageText: text, dialog : { cancel : function(){}, ok: console.log.bind(console) }, preventDefault: function(){} });
     }
