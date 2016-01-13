@@ -27,7 +27,9 @@
                 if(webview.src == "about:blank") return;
 
                 webview.contentWindow.postMessage({ message: 'welcome-tiddly-chrome-file-saver' }, window.location.origin);
-
+                
+                //webview.executeScript({file: 'tiddlyChromeFoxer.js'});
+                
                 //TODO: show a popup warning that the saver isn't activated yet. If the TW doesn't have the saver,
                 //      the user should not use this chrome app for editting TW, as it does not ask before closing.
                 //      We could inject a script to listen to wiki messages, but that's better done from inside TW.
