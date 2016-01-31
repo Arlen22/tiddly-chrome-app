@@ -22,7 +22,7 @@
         "partitions": [
             {
               "name": "browserTW",
-              "accessible_resources": ["emergencySaver.js"]
+              "accessible_resources": ["tiddlyChromeFoxer.js", "index"]
             }
         ]
     }
