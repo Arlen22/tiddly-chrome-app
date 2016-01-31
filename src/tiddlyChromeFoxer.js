@@ -17,20 +17,6 @@ chrome.runtime.getURL('emergencySaver.js')
 			(displayMessage || alert)(config.messages.mainSaved || "File saved");
 		});
 		
-        // Find the message box element
-        var messageBox = document.getElementById("tiddlyfox-message-box");
-        if(messageBox) {
-            // Create the message element and put it in the message box
-            var message = document.createElement("div");
-            message.setAttribute("data-tiddlyfox-path",path);
-            message.setAttribute("data-tiddlyfox-content",content);
-            messageBox.appendChild(message);
-            // Create and dispatch the custom event to the extension
-            var event = document.createEvent("Events");
-            event.initEvent("tiddlyfox-save-file",true,false);
-            message.dispatchEvent(event);
-        }
-        return true;
     };
     var injectedLoadFile = function(path) {
         try {
