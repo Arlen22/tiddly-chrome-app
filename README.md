@@ -11,3 +11,5 @@ Feel free to give input or open pull requests.
 We could also modify this to use the TiddlyFox adapter and get rid of the TiddlyChromeSaver. It is possible.
 
 Unsubstantial portions of code were ported from the TiddlyFox plugin. In future versions, there may be more code from there and the license may need to change, however the Chrome app code is entirely my own research and is freely available for anyone to use without any attribution or restriction (see license).
+
+inject.js was copied over from TiddlyFox. That part is basically verbatim. It is in TiddlyChromeFoxer.js
