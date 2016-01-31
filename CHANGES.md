@@ -1,5 +1,5 @@
 ## 0.4
-### Improvements
+### Features added
 * The TiddlyChromeSaver TW5 plugin is no longer required.
 * UNTESTED TiddlyWiki classic support was added, but not tested in any way. It may not work correctly.
 * TiddlyChrome inserts its own saver into the saverhandler list, with a priority of 5000, and so requires that the standard $tw global variable be available.
