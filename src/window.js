@@ -38,8 +38,7 @@
                 //      the user should not use this chrome app for editting TW, as it does not ask before closing.
                 //      We could inject a script to listen to wiki messages, but that's better done from inside TW.
 				
-				fileNotSavingWarning = showPopupDialog('alert',"This file is not connected to the saver and should have within the first few seconds. " +
-					"It is not recommended to use TiddlyChrome to edit this file because it will not warn you about unsaved changes before closing.");
+				
 
             });
             webview.addEventListener('newwindow', function(e) {
@@ -223,10 +222,11 @@
         else if(event.data.message === 'thankyou-tiddly-chrome-file-saver'){
             // remove the popup window that is shown on load 
 			postRecieved = true;
-			if(fileNotSavingWarning) fileNotSavingWarning.cancel();
-			fileNotSavingWarning = null;
-			if(!event.data.isTWC && !event.data.isTW5){
-				alert('TiddlyChrome could not detect TiddlyWiki 5');
+			//if(fileNotSavingWarning) fileNotSavingWarning.cancel();
+			//fileNotSavingWarning = null;
+			if(!event.data.isTW5){
+				alert("TiddlyChrome could not add the saver. It cannot save any changes. Clicking the save button should trigger a download with a funny name in a regular chrome window." +
+					"It is not recommended to use TiddlyChrome to edit this file because it will not warn you about unsaved changes before closing.");
 			}
         }
         
