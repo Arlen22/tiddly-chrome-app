@@ -225,6 +225,9 @@
 			postRecieved = true;
 			if(fileNotSavingWarning) fileNotSavingWarning.cancel();
 			fileNotSavingWarning = null;
+			if(!event.data.isTWC && !event.data.isTW5){
+				alert('TiddlyChrome could not detect TiddlyWiki 5');
+			}
         }
         
     });
