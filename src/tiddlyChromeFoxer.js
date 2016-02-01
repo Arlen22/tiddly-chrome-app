@@ -39,15 +39,16 @@ chrome.runtime.getURL('emergencySaver.js')
     }
 
     //TiddlyWiki Classic?
-    window.mozillaSaveFile = injectedSaveFile;
-    window.mozillaLoadFile = injectedLoadFile;
-    window.convertUriToUTF8 = injectedConvertUriToUTF8;
-    window.convertUnicodeToFileFormat = injectedConvertUnicodeToFileFormat;
-
+    //window.mozillaSaveFile = injectedSaveFile;
+    //window.mozillaLoadFile = injectedLoadFile;
+    //window.convertUriToUTF8 = injectedConvertUriToUTF8;
+    //window.convertUnicodeToFileFormat = injectedConvertUnicodeToFileFormat;
+	//Not for now. Paths aren't recognized, which could be bad.
     //End TiddlyFox inject.js ========================================================
     
 	
-	
+	var isTW5 = false;
+	var isTWC = false;
     var pendingSaves = {};
     var messageId = 1;
     window.addEventListener('message', function(event){
@@ -55,7 +56,7 @@ chrome.runtime.getURL('emergencySaver.js')
         if(event.data.message === "welcome-tiddly-chrome-file-saver"){ 
             window.postToParent = event.source.postMessage.bind(event.source);
             window.parentOrigin = event.origin;
-            window.postToParent({ message: 'thankyou-tiddly-chrome-file-saver' }, event.origin);
+            window.postToParent({ message: 'thankyou-tiddly-chrome-file-saver', isTWC: isTWC, isTW5: isTW5  }, event.origin);
         } else if (event.data.message === "file-saved-tiddly-chrome-file-saver"){
             pendingSaves[event.data.id](event.data.error);
             delete pendingSaves[event.data.id];
@@ -78,14 +79,23 @@ chrome.runtime.getURL('emergencySaver.js')
 		}
 	};
 	
-	$tw.saverHandler.savers.push({
-		info: {
-			name: "tiddly-chrome-saver",
-			priority: 5000,
-			capabilities: ["save", "autosave"]
-		},
-		save: saver
-	});
+	if(typeof($tw) !== "undefined") {
+		$tw.saverHandler.savers.push({
+			info: {
+				name: "tiddly-chrome-saver",
+				priority: 5000,
+				capabilities: ["save", "autosave"]
+			},
+			save: saver
+		});
+		isTW5 = true;
+	}
+	//if(version.title === "TiddlyWiki" && version.major === 2){
+	//	isTWC = true;
+	//}
+	
 	console.log("send-welcome-tiddly-chrome-file-saver");
+	
+	
 
 })();
