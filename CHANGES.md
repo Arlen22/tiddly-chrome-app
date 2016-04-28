@@ -1,3 +1,8 @@
+## 0.5 
+### Changes
+ * TiddlyWiki Classic support was removed as the save path was not checked before saving and saving did not work correctly.
+ * The warning box will no longer flash momentarily, but rather appears once the injected code cannot find the correct variable (`$tw.saverHandler.savers`) to insert the saver into. 
+
 ## 0.4
 ### Features added
 * The TiddlyChromeSaver TW5 plugin is no longer required.
