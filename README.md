@@ -1,6 +1,8 @@
 # TiddlyChrome
 A Google Chrome App that saves TW changes back to File System. 
 
+It might even work in Chrome OS, although I have not tested it. Any feedback is welcome.
+
 Feel free to give input or open pull requests.
 
 ##Installation
