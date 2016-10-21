@@ -4,7 +4,6 @@ Parent: welcome-tiddly-chrome-file-saver
     
 Child: save-file-tiddly-chrome-file-saver
     Parent: file-saved-tiddly-chrome-file-saver
-
 	
 chrome.runtime.getURL('emergencySaver.js')
 */
@@ -49,6 +48,7 @@ chrome.runtime.getURL('emergencySaver.js')
 	
 	var isTW5 = false;
 	var isTWC = false;
+	var thankyouSent = false;
     var pendingSaves = {};
     var messageId = 1;
     window.addEventListener('message', function(event){
@@ -57,6 +57,7 @@ chrome.runtime.getURL('emergencySaver.js')
             window.postToParent = event.source.postMessage.bind(event.source);
             window.parentOrigin = event.origin;
             window.postToParent({ message: 'thankyou-tiddly-chrome-file-saver', isTWC: isTWC, isTW5: isTW5  }, event.origin);
+			thankyouSent = true;
         } else if (event.data.message === "file-saved-tiddly-chrome-file-saver"){
             pendingSaves[event.data.id](event.data.error);
             delete pendingSaves[event.data.id];
@@ -78,18 +79,27 @@ chrome.runtime.getURL('emergencySaver.js')
 			return false;
 		}
 	};
-	
-	if(typeof($tw) !== "undefined" && $tw && $tw.saverHandler && $tw.saverHandler.savers) {
-		$tw.saverHandler.savers.push({
-			info: {
-				name: "tiddly-chrome-saver",
-				priority: 5000,
-				capabilities: ["save", "autosave"]
-			},
-			save: saver
-		});
-		isTW5 = true;
+	var saverObj = {
+		info: {
+			name: "tiddly-chrome-saver",
+			priority: 5000,
+			capabilities: ["save", "autosave"]
+		},
+		save: saver
+	};
+	function addSaver(){
+		if($tw.saverHandler && $tw.saverHandler.savers) {
+			$tw.saverHandler.savers.push(saverObj);
+			isTW5 = true;
+			if(thankyouSent) 
+				window.postToParent({message: 'update-tiddly-chrome-file-saver', TW5SaverAdded: true }, window.parentOrigin);
+		} else {
+			setTimeout(addSaver, 1000);
+		}
 	}
+	if(typeof($tw) !== "undefined" && $tw)
+		addSaver();
+	
 	//if(version.title === "TiddlyWiki" && version.major === 2){
 	//	isTWC = true;
 	//}
