@@ -1,3 +1,7 @@
+## 0.6
+### Bugs fixed 
+ * Encrypted TiddlyWikis can now be loaded correctly. Previously they would not work because the password needed to be typed in first. Now the tiddlyChromeFoxer.js file will keep retrying if it is unable to add the saver the first time around. A message box will pop up notifying the user that the saver has been added and the file should save correctly.
+
 ## 0.5 
 ### Changes
  * TiddlyWiki Classic support was removed as the save path was not checked before saving and saving did not work correctly.
