@@ -202,6 +202,7 @@
 	}
     window.addEventListener('message', function(event){
         console.log(event);
+		console.log(event.data.message);
         if(event.data.message === 'save-file-tiddly-chrome-file-saver'){
             currentFileEntry.createWriter(function(writer) {
                 writer.onerror = function(error){
@@ -220,13 +221,24 @@
             //do something with the temp save data
         }
         else if(event.data.message === 'thankyou-tiddly-chrome-file-saver'){
-            // remove the popup window that is shown on load 
 			postRecieved = true;
-			//if(fileNotSavingWarning) fileNotSavingWarning.cancel();
-			//fileNotSavingWarning = null;
+
 			if(!event.data.isTW5){
-				alert("TiddlyChrome could not add the saver. It cannot save any changes. Clicking the save button should trigger a download with a funny name in a regular chrome window." +
-					"It is not recommended to use TiddlyChrome to edit this file because it will not warn you about unsaved changes before closing.");
+				alert("TiddlyChrome could not add the saver. " + 
+					  "It cannot save any changes. Clicking the " + 
+					  "save button should trigger a download with " + 
+					  "a funny name in a regular chrome window. \r\n\r\n" +
+					  "It is not recommended to use TiddlyChrome to " + 
+					  "edit this file because it will not warn you " + 
+					  "about unsaved changes before closing. If you " + 
+					  "need to type in a password, go ahead and do that. \r\n\r\n" + 
+					  "TiddlyChrome will keep trying to add the saver and will " + 
+					  "notify you when it is successful");
+			}
+        }
+		else if(event.data.message === 'update-tiddly-chrome-file-saver'){
+			if(event.data.TW5SaverAdded){
+				alert("The saver for TW5 has now been added. Changes in TW5 will now be saved as usual.");
 			}
         }
         
