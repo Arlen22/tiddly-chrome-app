@@ -5,6 +5,8 @@ It might even work in Chrome OS, although I have not tested it. Any feedback is 
 
 Feel free to give input or open pull requests.
 
+TWC is not supported currently. See https://github.com/Arlen22/tiddly-chrome-app/issues/12
+
 ##Installation
 To install, go to https://github.com/Arlen22/tiddly-chrome-app/releases and download the crx file from the latest release. Then follow the instructions in the link below to install.
 
