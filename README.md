@@ -1,3 +1,5 @@
+Note: Chrome developers have announced that Chrome Apps are being phased out. Apps are no longer available from the Chrome Web Store, but can still be installed using the method outlined below. Because of this I am not planning to continue maintaining this app other than fixing any breaking changes that may come along. They have not yet announced when they are removing support completely, so until then I will try to keep it usable. 
+
 # TiddlyChrome
 A Google Chrome App that saves TW changes back to File System. 
 
