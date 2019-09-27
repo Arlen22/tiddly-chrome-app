@@ -8,9 +8,10 @@ Child: save-file-tiddly-chrome-file-saver
 chrome.runtime.getURL('emergencySaver.js')
 */
 (function(){
-
-//TiddlyFox inject.js https://github.com/TiddlyWiki/TiddlyFox/blob/1.0alpha18/content/inject.js
-	//var window = window;
+    document.body.style.overflow = 'auto';
+    document.getElementsByTagName("html")[0].style.overflow = "auto";
+    //TiddlyFox inject.js https://github.com/TiddlyWiki/TiddlyFox/blob/1.0alpha18/content/inject.js
+    //var window = window;
     var injectedSaveFile = function(path,content) {
 		return saver(content, "save", function(){
 			(displayMessage || alert)(config.messages.mainSaved || "File saved");
